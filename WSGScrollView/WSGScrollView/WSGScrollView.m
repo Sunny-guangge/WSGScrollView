@@ -138,12 +138,8 @@
     if (_pageControl == nil) {
         
         _pageControl = [[UIPageControl alloc] init];
-        _pageControl.numberOfPages = _imageArray.count;
-//        _pageControl.pageIndicatorTintColor = [UIColor blueColor];
-//        _pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
-        _pageControl.frame = CGRectMake(100, 100, 100, 20);
         _pageControl.backgroundColor = [UIColor clearColor];
-        _pageControl.currentPage = 0;
+        
     }
     return _pageControl;
 }
@@ -177,17 +173,15 @@
     
     switch (pageControlShowStyle) {
         case WSGPageControlShowStyleCenter:
-//            _pageControl.frame = CGRectMake(CGRectGetWidth(_scrollView.frame) / 2 - 10 * _imageArray.count, CGRectGetHeight(_scrollView.frame) - 20, 20 * _imageArray.count, 20);
+            _pageControl.frame = CGRectMake(CGRectGetWidth(_scrollView.frame) / 2 - 10 * _imageArray.count, CGRectGetHeight(_scrollView.frame) - 20, 20 * _imageArray.count, 20);
             break;
             
         default:
             break;
     }
-    
-//    [self addSubview:_pageControl];
-    
-//    _pageControl.currentPage = 0;
-//    _pageControl.enabled = YES;
+    _pageControl.numberOfPages = _imageArray.count;
+    _pageControl.currentPage = 0;
+    _pageControl.enabled = YES;
 }
 
 - (void)setImageArray:(NSMutableArray *)imageArray
@@ -288,13 +282,6 @@
 }
 
 #pragma mark - ClickImage
-- (void)clickCenterImage
-{
-    if (_tapcallbackBlock) {
-        _tapcallbackBlock(_centerIndex,[_imageArray objectAtIndex:_centerIndex]);
-    }
-}
-
 - (void)didCLickImage
 {
     if (_tapcallbackBlock) {
