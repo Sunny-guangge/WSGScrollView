@@ -9,8 +9,10 @@
 #import "ViewController.h"
 #import "WSGScrollView.h"
 
-@interface ViewController ()
-
+@interface ViewController ()<UIScrollViewDelegate>
+{
+    UIScrollView *scr;
+}
 @end
 
 @implementation ViewController
@@ -24,8 +26,8 @@
                             @"https://d13yacurqjgara.cloudfront.net/users/26059/screenshots/2016158/avalanche.jpg",
                             @"https://d13yacurqjgara.cloudfront.net/users/26059/screenshots/1839353/pilsner.jpg",
                             @"https://d13yacurqjgara.cloudfront.net/users/26059/screenshots/1833469/porter.jpg",
-                            @"https://d13yacurqjgara.cloudfront.net/users/26059/screenshots/2016158/avalanche.jpg",
-                            @"https://d13yacurqjgara.cloudfront.net/users/26059/screenshots/2016158/avalanche.jpg",
+//                            @"https://d13yacurqjgara.cloudfront.net/users/26059/screenshots/2016158/avalanche.jpg",
+//                            @"https://d13yacurqjgara.cloudfront.net/users/26059/screenshots/2016158/avalanche.jpg",
                             ];
     
     NSMutableArray *array = [NSMutableArray arrayWithArray:imageArray];
@@ -49,16 +51,39 @@
     self.navigationItem.rightBarButtonItem = rightBarButtonItem;
     
     
+    
+    scr = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 200, self.view.frame.size.width, 180)];
+    scr.bounces = NO;
+    scr.showsHorizontalScrollIndicator = NO;
+    scr.showsVerticalScrollIndicator = NO;
+    scr.contentSize = CGSizeMake(self.view.frame.size.width * 3, 180);
+    scr.contentOffset = CGPointMake(self.view.frame.size.width, 0);
+    scr.pagingEnabled = YES;
+    scr.delegate = self;
+    scr.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    [self.view addSubview:scr];
+    
+    UIView *oneView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 180)];
+    oneView.backgroundColor = [UIColor redColor];
+    [scr addSubview:oneView];
+    
+    UIView *twoView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.width, 180)];
+    twoView.backgroundColor = [UIColor blueColor];
+    [scr addSubview:twoView];
+    
+    UIView *threeView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width * 2, 0, self.view.frame.size.width, 180)];
+    threeView.backgroundColor = [UIColor greenColor];
+    [scr addSubview:threeView];
 }
 
 - (void)didClickLeftButton
 {
-    
+    [scr setContentOffset:CGPointMake(self.view.frame.size.width * 2, 0) animated:YES];
 }
 
 - (void)didClickRightButton
 {
-    
+    scr.contentOffset = CGPointMake(self.view.frame.size.width, 0);
 }
 
 - (void)didReceiveMemoryWarning {
